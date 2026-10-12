@@ -70,6 +70,8 @@ pub struct UserState {
     #[serde(default)]
     pub(crate) fill_high_values: Option<bool>,
     #[serde(default)]
+    pub(crate) anti_aliasing: Option<bool>,
+    #[serde(default)]
     pub(crate) primary_button_drag_behavior: Option<PrimaryMouseDrag>,
     #[serde(default)]
     pub(crate) arrow_key_bindings: Option<ArrowKeyBindings>,
@@ -200,6 +202,7 @@ impl Default for UserState {
             show_parameters_in_scopes: None,
             parameter_display_location: None,
             fill_high_values: None,
+            anti_aliasing: None,
             primary_button_drag_behavior: None,
             arrow_key_bindings: None,
             clock_highlight_type: None,

@@ -140,6 +140,7 @@ pub enum Message {
     SetNameAlignRight(bool),
     SetClockHighlightType(ClockHighlightType),
     SetFillHighValues(bool),
+    SetAntiAliasing(bool),
     SetTraceStyle(TraceStyle),
     /// Reset the translator for this variable back to default.
     ///

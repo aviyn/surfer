@@ -279,6 +279,8 @@ pub struct SurferLayout {
     move_focus_on_inserted_marker: bool,
     /// Fill high values in boolean waveforms
     fill_high_values: bool,
+    /// Smooth (anti-alias) the edges of waveforms, cursors and other lines
+    anti_aliasing: bool,
     /// Draw unknown vector waveform values as a centered horizontal line
     draw_vector_unknowns_as_line: bool,
     /// Trace style for vector waveforms
@@ -380,6 +382,10 @@ impl SurferLayout {
     #[must_use]
     pub fn fill_high_values(&self) -> bool {
         self.fill_high_values
+    }
+    #[must_use]
+    pub fn anti_aliasing(&self) -> bool {
+        self.anti_aliasing
     }
     #[must_use]
     pub fn draw_vector_unknowns_as_line(&self) -> bool {

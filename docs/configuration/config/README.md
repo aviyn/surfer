@@ -110,6 +110,7 @@ Controls the initial UI layout and waveform rendering behavior.
 | `focus_highlight` | `"Off"` | `Off`, `Background`, `LineWidth`, `BrightnessShift`, `LineWidthAndBrightnessShift` | How to highlight the focused waveform. |
 | `move_focus_on_inserted_marker` | `true` | boolean | Move focus to newly inserted markers. |
 | `fill_high_values` | `true` | boolean | Fill the high state in boolean waveforms. |
+| `anti_aliasing` | `true` | boolean | Smooth the edges of waveforms, cursors and other lines. Turn off for crisp, exactly `linewidth`-wide lines (slanted lines become jagged). |
 | `trace_style` | `"Default"` | `Default`, `Dinotrace`, `Zero` | Digital waveform trace style. `Dinotrace` draws no upper line and a bold lower line for all-zero vectors, and a bold upper line for all-one vectors. `Zero` draws all-zero vectors without the upper line. |
 | `transition_value` | `"Next"` | `Previous`, `Next`, `Both` | Which value to show when the cursor is exactly on a transition. |
 | `draw_vector_unknowns_as_line` | `false` | boolean | Draw vector unknowns as a line instead of a "box". |
