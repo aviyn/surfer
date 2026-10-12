@@ -1675,7 +1675,6 @@ impl SystemState {
                 self.invalidate_draw_commands();
             }
             Message::SetFillHighValues(fill) => self.user.fill_high_values = Some(fill),
-            Message::SetAntiAliasing(v) => self.user.anti_aliasing = Some(v),
             Message::SetTraceStyle(trace_style) => {
                 self.user.trace_style = Some(trace_style);
                 self.invalidate_draw_commands();

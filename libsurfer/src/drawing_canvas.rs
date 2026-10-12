@@ -1,6 +1,6 @@
 use ecolor::Color32;
 use egui::{FontId, PointerButton, Response, Sense, Ui};
-use emath::{Align2, GuiRounding, Pos2, Rect, RectTransform, Vec2};
+use emath::{Align2, Pos2, Rect, RectTransform, Vec2};
 use epaint::{
     CornerRadius, CubicBezierShape, PathShape, PathStroke, RectShape, Rgba, Shape, Stroke,
 };
@@ -1821,29 +1821,14 @@ pub(crate) fn draw_vertical_line_at_time(
     viewport: &Viewport,
     range: &TimeRange,
 ) {
-    let stroke = stroke.into();
     let x = viewport.pixel_from_time(time, ctx.cfg.canvas_size.x, range);
-    let mut top = (ctx.to_screen)(x, 0.);
-    let mut bottom = (ctx.to_screen)(x, ctx.cfg.canvas_size.y);
-    let snapped_x = snap_line_to_pixels(top.x, stroke.width, ctx.painter.pixels_per_point());
-    top.x = snapped_x;
-    bottom.x = snapped_x;
-    ctx.painter.line_segment([top, bottom], stroke);
-}
-
-/// Snap the screen coordinate of a straight horizontal or vertical line so that it covers
-/// whole physical pixels instead of being smeared over two partially lit pixels.
-///
-/// Lines an odd number of physical pixels wide are centered on a pixel center, lines an even
-/// number of pixels wide on a pixel edge. Lines thinner than one pixel count as one pixel wide.
-#[must_use]
-pub(crate) fn snap_line_to_pixels(coord: f32, width: f32, pixels_per_point: f32) -> f32 {
-    let width_in_pixels = (width * pixels_per_point).round().max(1.0);
-    if width_in_pixels % 2.0 == 1.0 {
-        coord.round_to_pixel_center(pixels_per_point)
-    } else {
-        coord.round_to_pixels(pixels_per_point)
-    }
+    ctx.painter.line_segment(
+        [
+            (ctx.to_screen)(x, 0.),
+            (ctx.to_screen)(x, ctx.cfg.canvas_size.y),
+        ],
+        stroke,
+    );
 }
 
 fn shift_brightness(color: Color32, delta: f32, background: Color32) -> Color32 {
@@ -1917,36 +1902,5 @@ impl VariableExt for String {
             (ValueKind::Event, _) => (1., Some(color.gamma_multiply(theme.waveform_opacity))),
         };
         (height, color, background)
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    use super::snap_line_to_pixels;
-
-    #[test]
-    fn snap_odd_pixel_widths_to_pixel_centers() {
-        // 1 point wide at 1x is one pixel: center on x.5
-        assert_eq!(snap_line_to_pixels(10.2, 1.0, 1.0), 10.5);
-        assert_eq!(snap_line_to_pixels(10.9, 1.0, 1.0), 10.5);
-        // 0.5 points at 2x is one pixel: pixel centers are at 0.25, 0.75, ...
-        assert_eq!(snap_line_to_pixels(10.1, 0.5, 2.0), 10.25);
-        assert_eq!(snap_line_to_pixels(10.6, 0.5, 2.0), 10.75);
-        // 3 pixels wide
-        assert_eq!(snap_line_to_pixels(10.2, 3.0, 1.0), 10.5);
-    }
-
-    #[test]
-    fn snap_even_pixel_widths_to_pixel_edges() {
-        assert_eq!(snap_line_to_pixels(10.4, 2.0, 1.0), 10.0);
-        assert_eq!(snap_line_to_pixels(10.6, 2.0, 1.0), 11.0);
-        // 1 point at 2x is two pixels: edges every 0.5 points
-        assert_eq!(snap_line_to_pixels(10.3, 1.0, 2.0), 10.5);
-    }
-
-    #[test]
-    fn snap_sub_pixel_widths_as_one_pixel() {
-        assert_eq!(snap_line_to_pixels(10.2, 0.3, 1.0), 10.5);
-        assert_eq!(snap_line_to_pixels(10.2, 0.0, 1.0), 10.5);
     }
 }

@@ -134,13 +134,6 @@ impl SystemState {
     }
 
     #[inline]
-    pub fn anti_aliasing(&self) -> bool {
-        self.user
-            .anti_aliasing
-            .unwrap_or_else(|| self.user.config.layout.anti_aliasing())
-    }
-
-    #[inline]
     pub fn animation_enabled(&self) -> bool {
         self.user
             .animation_enabled

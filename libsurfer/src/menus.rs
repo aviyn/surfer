@@ -512,11 +512,6 @@ impl SystemState {
                 .then(|| {
                     msgs.push(Message::SetFillHighValues(!self.fill_high_values()));
                 });
-            ui.radio(self.anti_aliasing(), "Anti-aliasing")
-                .clicked()
-                .then(|| {
-                    msgs.push(Message::SetAntiAliasing(!self.anti_aliasing()));
-                });
             ui.radio(self.animation_enabled(), "UI animations")
                 .clicked()
                 .then(|| {

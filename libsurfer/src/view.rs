@@ -118,10 +118,6 @@ impl eframe::App for SystemState {
         if ui.zoom_factor() != ui_zoom_factor {
             ui.set_zoom_factor(ui_zoom_factor);
         }
-        let anti_aliasing = self.anti_aliasing();
-        if ui.tessellation_options(|o| o.feathering) != anti_aliasing {
-            ui.tessellation_options_mut(|o| o.feathering = anti_aliasing);
-        }
 
         while let Some(msg) = msgs.pop() {
             #[cfg(not(target_arch = "wasm32"))]

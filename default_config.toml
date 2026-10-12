@@ -47,7 +47,6 @@ default_zoom_factor = 1.0
 focus_highlight = "Off"
 move_focus_on_inserted_marker = true
 fill_high_values = true
-anti_aliasing = true
 draw_vector_unknowns_as_line = false
 trace_style = "Default"
 transition_value = "Next"
